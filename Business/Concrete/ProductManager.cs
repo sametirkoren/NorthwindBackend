@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constans;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -17,36 +19,41 @@ namespace Business.Concrete
             _productDal = productDal;
         }
 
-        public void Add(Product product)
+     
+
+        IResult IProductService.Add(Product product)
         {
             _productDal.Add(product);
+            return new SuccessResult(Messages.ProductAdded);
         }
 
-        public void Delete(Product product)
+        IResult IProductService.Delete(Product product)
         {
             _productDal.Delete(product);
-
+            return new SuccessResult(Messages.ProductDeleted);
         }
 
-        public Product GetById(int productId)
+        IDataResult<Product> IProductService.GetById(int productId)
         {
-            return _productDal.Get(p => p.ProductId == productId);
+            return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId));
         }
 
-        public List<Product> GetList()
+        IDataResult<List<Product>> IProductService.GetList()
         {
-            return _productDal.GetList().ToList();
+            return new SuccessDataResult<List<Product>>(_productDal.GetList().ToList());
+
         }
 
-        public List<Product> GetListByCategory(int categoryId)
+        IDataResult<List<Product>> IProductService.GetListByCategory(int categoryId)
         {
-            return _productDal.GetList(p => p.CategoryId == categoryId).ToList();
+            return new SuccessDataResult<List<Product>>(_productDal.GetList(p=>p.CategoryId == categoryId).ToList());
+
         }
 
-        public void Update(Product product)
+        IResult IProductService.Update(Product product)
         {
             _productDal.Update(product);
-
+            return new SuccessResult(Messages.ProductUpdated);
         }
     }
 }
