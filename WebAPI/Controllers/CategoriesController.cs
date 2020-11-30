@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet("getall")]
-
+        [Authorize()]
         public IActionResult GetList()
         {
             var result = _categoryService.GetList();
