@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,6 +20,9 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+
+        [CacheAspect(duration:10)]
+        [CacheRemoveAspect("ICategoryService.Get")]
         public IDataResult<List<Category>> GetList()
         {
             return new SuccessDataResult<List<Category>>(_categoryDal.GetList().ToList());
