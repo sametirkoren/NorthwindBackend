@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
@@ -22,7 +23,8 @@ namespace Business.Concrete
 
 
         [CacheAspect(duration:10)]
-        [CacheRemoveAspect("ICategoryService.Get")]
+        //[CacheRemoveAspect("ICategoryService.Get")]
+        [SecuredOperation("Category.Listt")]
         public IDataResult<List<Category>> GetList()
         {
             return new SuccessDataResult<List<Category>>(_categoryDal.GetList().ToList());
