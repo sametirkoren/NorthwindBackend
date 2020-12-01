@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Business.Concrete
 {
@@ -22,11 +24,14 @@ namespace Business.Concrete
         }
 
 
-        [CacheAspect(duration:10)]
+        //[CacheAspect(duration:10)]
         //[CacheRemoveAspect("ICategoryService.Get")]
-        [SecuredOperation("Category.Listt")]
+        //[SecuredOperation("Category.Listt")]
+
+        [PerformanceAspect(5)]
         public IDataResult<List<Category>> GetList()
         {
+            Thread.Sleep(5000);
             return new SuccessDataResult<List<Category>>(_categoryDal.GetList().ToList());
         }
     }
