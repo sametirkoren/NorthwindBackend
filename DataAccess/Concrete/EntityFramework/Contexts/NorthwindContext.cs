@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=45.151.250.150\\MSSQLSERVER2016;Initial Catalog=sametirk_northwind;User Id=sametirk_cv;Password=!g9pQ8n5");    
+            optionsBuilder.UseSqlServer("Data Source=45.151.250.15\\MSSQLSERVER2016;Initial Catalog=sametirk_northwind;User Id=sametirk_cv;Password=!g9pQ8n5");    
         }
 
         public DbSet<Product> Products { get; set; }

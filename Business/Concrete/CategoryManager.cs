@@ -29,7 +29,7 @@ namespace Business.Concrete
         //[CacheAspect(duration:10)]
         //[CacheRemoveAspect("ICategoryService.Get")]
         //[SecuredOperation("Category.Listt")]
-        [LogAspect(typeof(DatabaseLogger))]
+        //[LogAspect(typeof(DatabaseLogger))]
 
         //[PerformanceAspect(5)]
         public IDataResult<List<Category>> GetList()

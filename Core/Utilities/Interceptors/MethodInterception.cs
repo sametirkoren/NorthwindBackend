@@ -15,7 +15,7 @@ namespace Core.Utilities.Interceptors
         protected virtual void OnAfter(IInvocation invocation) { } // invocation bizim methodumuz
 
         // method hata verdiğinde sen çalış
-        protected virtual void OnException(IInvocation invocation) { } // invocation bizim methodumuz
+        protected virtual void OnException(IInvocation invocation , System.Exception e ) { } // invocation bizim methodumuz
 
         // method başarılıysa sen çalış
         protected virtual void OnSuccess(IInvocation invocation) { } // invocation bizim methodumuz
@@ -29,10 +29,10 @@ namespace Core.Utilities.Interceptors
             {
                 invocation.Proceed(); // methodu çalıştır demek.
             }
-            catch
+            catch(Exception e)
             {
                 isSuccess = false;
-                OnException(invocation);
+                OnException(invocation , e);
                 throw;
             }
 
