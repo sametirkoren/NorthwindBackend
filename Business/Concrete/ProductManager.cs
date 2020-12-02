@@ -3,6 +3,7 @@ using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -16,6 +17,7 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         private IProductDal _productDal;
+        // başka bir servisi çağırmak istiyorsak servisi çağırcağız dal'ı değil.
 
         public ProductManager(IProductDal productDal)
         {
@@ -26,9 +28,21 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         IResult IProductService.Add(Product product)
         {
+
+            IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName));
            
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
+        }
+
+        private IResult CheckIfProductNameExists(string productName)
+        {
+            if (_productDal.Get(p => p.ProductName == productName) != null)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+
+            return new SuccessResult();
         }
 
         IResult IProductService.Delete(Product product)
